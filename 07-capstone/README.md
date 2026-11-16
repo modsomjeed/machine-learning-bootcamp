@@ -19,7 +19,7 @@ You are done when a classmate can do all of these from the READMEs, without you 
 - `make prepare` in this folder registers `fresh-and-good-churn` at alias `champion` when the held-out ROC-AUC is at least 0.70.
 - The form loads that alias and scores `FG0010`.
 - The monitor page opens and you can say retrain or rollback if a column crosses 0.2 PSI.
-- Feast lookup in this folder returns a plan and an order count for that id.
+- Feast lookup returns a plan and an order count for that id.
 - `plan/one_page.md` is filled and signed.
 - You have rehearsed the demo once at 8 minutes.
 

@@ -2,7 +2,7 @@
 
 Day 5 of the Machine Learning Bootcamp. You run the Fresh and Good training tasks in order, keep a weak model off the alias, and read a drift check before you decide to retrain or roll back.
 
-The Airflow steps for this folder are in [airflow/README.md](airflow/README.md). If Docker is not installed, use `make run`.
+The Airflow steps are in [airflow/README.md](airflow/README.md). If Docker is not installed, use `make run`.
 
 - 5.1 [Run the pipeline](00_pipeline.ipynb)
 - 5.2 [Break the pipeline](01_bug_bounty.ipynb)
@@ -21,7 +21,7 @@ This folder uses Python 3.14.10. `uv sync` reads `.python-version`. Tool pins fo
 
 The form scores one customer id from the model the pipeline registered. The alias is `champion` on `fresh-and-good-churn`. A second page compares live features with the training reference.
 
-The source table is `data/fresh_and_good_customers.csv` in this folder. This day does not generate a new table. Ids are `FG0000` through `FG2399` in file order. Read `DATA_ASSUMPTIONS.md`.
+The source table is `data/fresh_and_good_customers.csv` in this folder. Ids are `FG0000` through `FG2399` in file order. Read `DATA_ASSUMPTIONS.md`.
 
 ## Create the environment
 

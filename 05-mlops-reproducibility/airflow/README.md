@@ -82,4 +82,4 @@ docker compose down
 
 ## If Docker will not start
 
-Some laptops cannot give Docker 4 GB. That is expected. From the parent of this `airflow` folder, `dvc repro` trains the model with no Airflow install. Use that when this clinic is not available. One working Docker machine per team is enough for the UI.
+Some laptops cannot give Docker 4 GB. That is expected. From `05-mlops-reproducibility` (the parent of this `airflow` folder), `dvc repro` trains the model with no Airflow install. Use that command when this clinic is not available. One working Docker machine per team is enough for the UI.

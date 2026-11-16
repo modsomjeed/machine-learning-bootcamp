@@ -16,7 +16,7 @@ LEAK_COLUMNS = ("orders_next_30d", "july_spend_copy_thb")
 SEED = 42
 
 
-def load_day1() -> pd.DataFrame:
+def load_customers() -> pd.DataFrame:
     if not DAY1_CSV.is_file():
         raise FileNotFoundError(DAY1_CSV)
     return pd.read_csv(DAY1_CSV)
@@ -34,7 +34,7 @@ def plant_leaks(frame: pd.DataFrame, seed: int = SEED) -> pd.DataFrame:
 
 
 def built_table() -> pd.DataFrame:
-    return plant_leaks(load_day1())
+    return plant_leaks(load_customers())
 
 
 def safe_feature_columns(columns) -> list[str]:
@@ -57,7 +57,7 @@ def check_table(path: Path = DAY2_CSV) -> None:
         saved.reset_index(drop=True),
         check_dtype=False,
     )
-    leaked = plant_leaks(load_day1())
+    leaked = plant_leaks(load_customers())
     if not leaked["orders_next_30d"].eq(0).equals(leaked["churned"].eq(1)):
         raise AssertionError("orders_next_30d is a July churn flag")
     if not np.allclose(leaked["july_spend_copy_thb"], leaked["next_month_spend_thb"]):

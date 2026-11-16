@@ -6,7 +6,7 @@ A hands-on machine learning bootcamp. You work on your own laptop, with no cloud
 
 ### Day 2: [Unsupervised learning](02-unsupervised-learning/)
 
-Find two leaky columns, group the same customers, flag odd rows, and suggest products. The form has a Segments tab and a Recommendations tab. Work in `02-unsupervised-learning/`.
+Find two leaky columns, group Fresh and Good customers, flag odd rows, and suggest products. The form has a Segments tab and a Recommendations tab. Work in `02-unsupervised-learning/`.
 
 ### [Reinforcement learning](03-reinforcement-learning/)
 
@@ -26,4 +26,4 @@ Run the churn training tasks in order, with a gate before the alias moves. The f
 
 ### Day 6: [Capstone](07-capstone/)
 
-Demo in 8 minutes. The form in that folder scores a customer, shows drift, and can look a customer up in Feast. Work in `07-capstone/`.
+Demo in 8 minutes. The form scores a customer, shows drift, and can look a customer up in Feast. Work in `07-capstone/`.

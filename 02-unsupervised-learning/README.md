@@ -23,7 +23,7 @@ Bangkok time. Breaks are 10:30–10:45 and 14:30–14:45. Lunch is 12:00–13:00
 | 11:20–12:00 | Odd customers. Isolation forest and a z-score check on the same three columns. |
 | 13:00–14:30 | Baskets, popularity versus cosine similarity, precision@k. |
 | 14:45–15:10 | Open the Day 2 form. Segments tab, then Recommendations tab. |
-| 15:10–16:00 | Optional reinforcement game. It is not required to finish this folder. |
+| 15:10–16:00 | Optional: reinforcement game (separate workshop). |
 
 ## What you build
 
@@ -97,7 +97,7 @@ The form has a Segments tab and a Recommendations tab. If a table is missing, th
 
 ## If you finish early
 
-Business: sketch a campaign cost and one retained-customer value for each segment. Engineer: use the segment id when you pick the product list. Neither is required. There is no gridworld notebook in this folder.
+Business: sketch a campaign cost and one retained-customer value for each segment. Engineer: use the segment id when you pick the product list. Neither is required.
 
 ## Checks for the teaching team
 

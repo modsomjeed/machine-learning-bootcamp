@@ -10,7 +10,7 @@ The training frame adds one derived column that reads a July label. The Feast ta
 
 The pipeline fit uses one 80/20 train and test split. That split is for this demo.
 
-Feast's feature view uses a ttl of 0 days. In Feast 0.67 a ttl of 0 means the online values do not expire. The snapshot is June 2026, and a later class still needs to read it. The feature view leaves `offline` false. Historical reads use the parquet file. `feast materialize` fills the sqlite online store. Setting `offline` true on this file source fails in Feast 0.67 because the file writer rejects the table it just read.
+Feast's feature view uses a ttl of 0 days. In Feast 0.67 a ttl of 0 means the online values do not expire. The snapshot is June 2026. The feature view leaves `offline` false. Historical reads use the parquet file. `feast materialize` fills the sqlite online store. Setting `offline` true on this file source fails in Feast 0.67 because the file writer rejects the table it just read.
 
 MLflow uses a local file store. MLflow 3.18 refuses that store unless `MLFLOW_ALLOW_FILE_STORE` is true. The code sets that variable. This is not a database.
 

@@ -1,6 +1,6 @@
 # Reinforcement learning
 
-You play four snack machines with an epsilon-greedy rule. This folder is its own workshop.
+You play four snack machines with an epsilon-greedy rule.
 
 - 3.1 [Four snack machines](00_bandit.ipynb)
 - 3.2 [A small grid](01_q_learning.ipynb), extra if the bandit is finished

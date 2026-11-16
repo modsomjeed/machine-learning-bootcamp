@@ -4,7 +4,7 @@ Fresh and Good is a fictional Bangkok online grocery. The churn models read `dat
 
 ## Customers
 
-The churn models read `data/fresh_and_good_customers.csv` in this folder.
+The June feature columns are `tenure_days`, `orders_90d`, `spend_thb_90d`, `avg_basket_thb_90d`, `days_since_last_order`, `promo_order_share_90d`, `app_sessions_90d`, `support_tickets_90d`, `district`, `plan`, and `primary_aisle`. The July labels are `churned` and `next_month_spend_thb`.
 
 `churned` is the label. The split is seed 42, 1440 train, 480 validation, 480 test. Score the morning models on the validation rows. Leave the test rows unused.
 

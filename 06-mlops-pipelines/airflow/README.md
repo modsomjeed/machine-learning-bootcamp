@@ -1,6 +1,6 @@
 # Airflow for the training dag
 
-This folder has its own copy of the official Airflow 3.4.0 `docker-compose.yaml`, unmodified, from:
+This folder has a copy of the official Airflow 3.4.0 `docker-compose.yaml`, unmodified, from:
 
 https://airflow.apache.org/docs/apache-airflow/3.4.0/docker-compose.yaml
 
