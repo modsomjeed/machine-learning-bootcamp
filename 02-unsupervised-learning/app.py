@@ -1,4 +1,4 @@
-"""Day 2 form: segment table and product neighbors. Does not touch the Day 1 form."""
+"""Day 2 form: segment table and product neighbors."""
 
 import os
 from pathlib import Path

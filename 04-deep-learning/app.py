@@ -1,4 +1,4 @@
-"""Day 3 form: a churn tab and a product-image tab. Does not import Day 1 or Day 2."""
+"""Day 3 form: a churn tab and a product-image tab."""
 
 import os
 import sys

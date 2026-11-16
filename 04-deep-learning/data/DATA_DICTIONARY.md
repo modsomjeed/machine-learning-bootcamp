@@ -1,12 +1,12 @@
 # Day 3 tables
 
-Fresh and Good is the fictional Bangkok online grocery from Day 1. The churn models read the Day 1 customer file. The image models use Fashion-MNIST, or scikit-learn digits when those files are absent.
+Fresh and Good is a fictional Bangkok online grocery. The churn models read `data/fresh_and_good_customers.csv` in this folder. The image models use Fashion-MNIST, or scikit-learn digits when those files are absent.
 
 ## Customers
 
-The churn models read `01-supervised-learning/data/fresh_and_good_customers.csv`. This folder does not copy or change that file. The columns are in the [Day 1 data dictionary](../../01-supervised-learning/data/DATA_DICTIONARY.md).
+The June feature columns are `tenure_days`, `orders_90d`, `spend_thb_90d`, `avg_basket_thb_90d`, `days_since_last_order`, `promo_order_share_90d`, `app_sessions_90d`, `support_tickets_90d`, `district`, `plan`, and `primary_aisle`. The July labels are `churned` and `next_month_spend_thb`.
 
-`churned` is the label. The split is the Day 1 split: seed 42, 1440 train, 480 validation, 480 test. Score the morning models on the validation rows. Leave the test rows unused.
+`churned` is the label. The split is seed 42, 1440 train, 480 validation, 480 test. Score the morning models on the validation rows. Leave the test rows unused.
 
 ## Fashion-MNIST
 

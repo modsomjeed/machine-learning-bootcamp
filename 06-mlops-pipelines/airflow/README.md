@@ -1,6 +1,6 @@
 # Airflow for the training dag
 
-If you skipped Day 4's Airflow clinic, spend the first 15 minutes on that clinic before this dag. The steps and the memory floor are in `05-mlops-reproducibility/airflow/README.md`. This folder has its own copy of the same official Airflow 3.4.0 `docker-compose.yaml`, unmodified, from:
+This folder has a copy of the official Airflow 3.4.0 `docker-compose.yaml`, unmodified, from:
 
 https://airflow.apache.org/docs/apache-airflow/3.4.0/docker-compose.yaml
 
@@ -20,7 +20,7 @@ That calls ingest, validate, features, train, evaluate, and register, in that or
 
 The stock compose file mounts `dags`, `logs`, `plugins`, and `config`. It does not mount the rest of this repo, and the Airflow image does not include pandas, scikit-learn, or MLflow. Two limits follow.
 
-The tasks read the Day 1 CSV. From this folder, copy it into the mounted dags folder:
+The tasks read the customer CSV. From this folder, copy it into the mounted dags folder:
 
 ```sh
 make vendor

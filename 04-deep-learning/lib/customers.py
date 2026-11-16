@@ -1,7 +1,7 @@
-"""Day 1 customers, read only, and a random forest versus an MLP.
+"""Customers, read only, and a random forest versus an MLP.
 
-The forest settings match ``01-supervised-learning/lib/pipelines.py``. This
-module does not import that file and does not write the Day 1 CSV.
+The forest uses 80 trees, min_samples_leaf 5, and seed 42. This module does
+not write the customer CSV.
 """
 
 import time
@@ -20,7 +20,7 @@ from sklearn.exceptions import ConvergenceWarning
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 MODULE = Path(__file__).resolve().parents[1]
-DAY1_CSV = MODULE.parent / "01-supervised-learning" / "data" / "fresh_and_good_customers.csv"
+DAY1_CSV = MODULE / "data" / "fresh_and_good_customers.csv"
 
 NUMERIC = (
     "tenure_days",
@@ -36,7 +36,7 @@ CATEGORICAL = ("district", "plan", "primary_aisle")
 FEATURES = NUMERIC + CATEGORICAL
 TARGET = "churned"
 SEED = 42
-# Same fractions as Day 1: 20% test, then 25% of the rest as validation.
+# 20% test, then 25% of the rest as validation.
 TEST_FRACTION = 0.20
 VALIDATION_FRACTION_OF_REST = 0.25
 
@@ -153,7 +153,7 @@ def fit_timed(pipeline: Pipeline, train: pd.DataFrame) -> float:
 
 
 def compare_models(train: pd.DataFrame, validation: pd.DataFrame, hidden_layer_sizes=(32,)):
-    """Fit the Day 1 forest and one MLP. Scores are validation ROC-AUC."""
+    """Fit the forest and one MLP. Scores are validation ROC-AUC."""
     forest = forest_pipeline()
     forest_seconds = fit_timed(forest, train)
     network = mlp_pipeline(hidden_layer_sizes=hidden_layer_sizes)

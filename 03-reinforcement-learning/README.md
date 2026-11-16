@@ -1,11 +1,11 @@
 # Reinforcement learning
 
-This is the 15:10–16:00 block on Day 2. It is not part of `02-unsupervised-learning`. You play four snack machines with an epsilon-greedy rule.
+You play four snack machines with an epsilon-greedy rule.
 
 - 3.1 [Four snack machines](00_bandit.ipynb)
 - 3.2 [A small grid](01_q_learning.ipynb), extra if the bandit is finished
 
-Run the commands on this page from `03-reinforcement-learning` (this folder). Tool versions are pinned in the repo `mise.toml`. This folder has its own `pyproject.toml` and uses the same package versions as Day 2. Do not edit Day 1.
+Run the commands on this page from `03-reinforcement-learning` (this folder). Tool versions are pinned in the repo `mise.toml`. This folder has its own `pyproject.toml`.
 
 ## Steps
 
@@ -37,7 +37,7 @@ uv sync --frozen
 PYTHONPATH=lib uv run python -m ipykernel install --user --name fresh-and-good-rl --display-name "Python (fresh-and-good-rl)"
 ```
 
-The repo `mise.toml` sets `PYTHONPATH` to `01-supervised-learning/lib`. Leave that line alone. For these commands, set `PYTHONPATH=lib` as the Makefile does. The notebook puts this folder's `lib` first on `sys.path`.
+For these commands, set `PYTHONPATH=lib` as the Makefile does. The notebook puts this folder's `lib` first on `sys.path`.
 
 `uv.lock` installs PyYAML 6.0.3 from source because that release has no cp315 wheel. If the build fails, check that your laptop has a C compiler.
 

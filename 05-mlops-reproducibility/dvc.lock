@@ -3,7 +3,7 @@ stages:
   prepare:
     cmd: env PYTHONPATH=lib uv run --no-sync python -m prepare
     deps:
-    - path: ../01-supervised-learning/data/fresh_and_good_customers.csv
+    - path: data/fresh_and_good_customers.csv
       hash: md5
       md5: 9006b2d2f99a817340462a3e28210fb7
       size: 177601
@@ -17,8 +17,8 @@ stages:
       size: 1896
     - path: lib/schema.py
       hash: md5
-      md5: fe0b11b44a99e6a2e6cceb2e2f368d7c
-      size: 2008
+      md5: dc84bb9bf65219b4686d5f463d08a21f
+      size: 1974
     outs:
     - path: data/customers.parquet
       hash: md5
@@ -41,8 +41,8 @@ stages:
       size: 535
     - path: lib/schema.py
       hash: md5
-      md5: fe0b11b44a99e6a2e6cceb2e2f368d7c
-      size: 2008
+      md5: dc84bb9bf65219b4686d5f463d08a21f
+      size: 1974
     outs:
     - path: data/train_features.parquet
       hash: md5
@@ -65,8 +65,8 @@ stages:
       size: 1802
     - path: lib/schema.py
       hash: md5
-      md5: fe0b11b44a99e6a2e6cceb2e2f368d7c
-      size: 2008
+      md5: dc84bb9bf65219b4686d5f463d08a21f
+      size: 1974
     - path: lib/train.py
       hash: md5
       md5: 30038f07d9d4c0cbede711b479985901

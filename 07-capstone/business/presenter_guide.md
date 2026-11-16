@@ -8,7 +8,7 @@ Who at Fresh and Good uses the score, and what do they do differently when the s
 
 ## Cost of errors
 
-What does a wasted voucher cost, and what does a missed churner cost? Use the Day 1 cost card if your team still has those two numbers. If you do not, say that the numbers are a classroom assumption.
+What does a wasted voucher cost, and what does a missed churner cost? If the team has not chosen those two numbers, say that they are a classroom assumption.
 
 ## ROI
 

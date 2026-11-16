@@ -1,6 +1,6 @@
 # Day 3: Deep learning
 
-Day 3 of the Machine Learning Bootcamp. You stay with Fresh and Good, the fictional Bangkok online grocery from Day 1. In the morning, fit a small neural net on churn and compare it with the random forest. After lunch, try OpenCV, train a small CNN on product images, and add an image tab to the form. At 15:30, log one run in MLflow and share the memo.
+Day 3 of the Machine Learning Bootcamp. Fresh and Good is a fictional Bangkok online grocery. In the morning, fit a small neural net on churn and compare it with a random forest. After lunch, try OpenCV, train a small CNN on product images, and add an image tab to the form. At 15:30, log one run in MLflow and share the memo.
 
 - 3.1 [Neural net on churn](00_mlp_churn.ipynb)
 - 3.2 [Training behaviour](01_training.ipynb)
@@ -11,7 +11,7 @@ Day 3 of the Machine Learning Bootcamp. You stay with Fresh and Good, the fictio
 - 3.7 [Why this model](why_this_model.md)
 - [Column notes](data/DATA_DICTIONARY.md)
 
-Run the commands on this page from `04-deep-learning` (this folder). Tool versions are pinned in the repo `mise.toml`. This folder has its own `pyproject.toml`. Do not edit Day 1 or Day 2.
+Run the commands on this page from `04-deep-learning` (this folder). Tool versions are pinned in the repo `mise.toml`. This folder has its own `pyproject.toml`.
 
 ## Timetable
 
@@ -34,7 +34,7 @@ A validation ROC-AUC for the forest and for one MLP, a short note on the train-v
 By the end of this workshop, you can:
 
 - Say what a layer, a loss, and a learning rate are doing in `MLPClassifier`.
-- Compare that network with the Day 1 random forest on validation ROC-AUC.
+- Compare that network with a random forest on validation ROC-AUC. The forest uses 80 trees, `min_samples_leaf` 5, and seed 42.
 - Point at a learning rate or a missing scaler that hurts the validation score.
 - Resize a grayscale image and run an edge filter.
 - Train a two-layer CNN on CPU and read its validation accuracy.
@@ -55,7 +55,7 @@ Humans as convolution filters. One person slides the 2 by 2 kernel in the OpenCV
 
 ## The data
 
-Churn uses the Day 1 file, `01-supervised-learning/data/fresh_and_good_customers.csv`. This folder reads it and does not write it. The split is the Day 1 split: seed 42, 1440 train, 480 validation, 480 test. Leave the test rows unused.
+Churn uses `data/fresh_and_good_customers.csv` in this folder. The split is seed 42, 1440 train, 480 validation, 480 test. Leave the test rows unused.
 
 Product images are Fashion-MNIST when `data/fashion/` contains the four IDX files. Those files are not in git. The license is MIT, Zalando SE, 2017. See [data/DATA_DICTIONARY.md](data/DATA_DICTIONARY.md). If the files are missing, the notebooks use `sklearn.datasets.load_digits`. There is no download for digits.
 
@@ -101,7 +101,7 @@ Learning curve, train rows only, 3-fold ROC-AUC:
 
 ## Before class
 
-Use the Day 1 install for mise 2026.11.3, uv 0.13.7, and Python 3.15.2. The Linux setup was tested for this day. The macOS and Windows commands for the notebook environment were not retested.
+Install mise 2026.11.3, uv 0.13.7, and Python 3.15.2. The pins are in the repo `mise.toml`. The Linux setup was tested for this day. The macOS and Windows commands for the notebook environment were not retested.
 
 PyTorch 2.15.0 publishes a cp315 wheel for this Python. This project installs it from the CPU index, `https://download.pytorch.org/whl/cpu`, so a CUDA build is not selected. On Linux and Windows the wheel name ends in `+cpu`. On macOS Apple Silicon the CPU index serves `torch-2.15.0-cp315-cp315-macosx_14_0_arm64.whl` without that suffix. The Linux x86_64 CPU wheel downloaded here is 209,534,469 bytes.
 
@@ -117,7 +117,7 @@ uv sync --frozen
 PYTHONPATH=lib uv run python -m ipykernel install --user --name fresh-and-good-day3 --display-name "Python (fresh-and-good-day3)"
 ```
 
-The repo `mise.toml` sets `PYTHONPATH` to `01-supervised-learning/lib`. Leave that line alone so Day 1 imports still work. For Day 3 commands, set `PYTHONPATH=lib` as the Makefile does. The notebooks put this folder's `lib` first on `sys.path`.
+For Day 3 commands, set `PYTHONPATH=lib` as the Makefile does. The notebooks put this folder's `lib` first on `sys.path`.
 
 MLflow 3.18 keeps the filesystem tracking store only if you opt in. The notebooks and the Makefile set `MLFLOW_ALLOW_FILE_STORE=true`. Runs are files under `tracking/`. Nothing is uploaded. `tracking/` is gitignored. This day does not register a model.
 

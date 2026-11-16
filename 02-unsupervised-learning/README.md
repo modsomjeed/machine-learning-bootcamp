@@ -1,6 +1,6 @@
 # Day 2: Unsupervised learning
 
-Day 2 of the Machine Learning Bootcamp. You stay with Fresh and Good, the fictional Bangkok online grocery from Day 1. In the morning, find two leaky columns, group customers, and flag odd rows. In the afternoon, suggest products and open a second form. At 15:10, switch to [03-reinforcement-learning](../03-reinforcement-learning/).
+Day 2 of the Machine Learning Bootcamp. Fresh and Good is a fictional Bangkok online grocery. In the morning, find two leaky columns, group customers, and flag odd rows. In the afternoon, suggest products and open a second form.
 
 - 2.1 [Leaks, then two features](00_leaks.ipynb)
 - 2.2 [Customer segments](01_clusters.ipynb)
@@ -9,7 +9,7 @@ Day 2 of the Machine Learning Bootcamp. You stay with Fresh and Good, the fictio
 - 2.5 [Segments and recommendations form](app.py)
 - [Column notes](data/DATA_DICTIONARY.md)
 
-Run the commands on this page from `02-unsupervised-learning` (this folder). Tool versions are pinned in the repo `mise.toml`. This folder has its own `pyproject.toml`. Do not edit Day 1.
+Run the commands on this page from `02-unsupervised-learning` (this folder). Tool versions are pinned in the repo `mise.toml`. This folder has its own `pyproject.toml`.
 
 ## Timetable
 
@@ -23,7 +23,7 @@ Bangkok time. Breaks are 10:30–10:45 and 14:30–14:45. Lunch is 12:00–13:00
 | 11:20–12:00 | Odd customers. Isolation forest and a z-score check on the same three columns. |
 | 13:00–14:30 | Baskets, popularity versus cosine similarity, precision@k. |
 | 14:45–15:10 | Open the Day 2 form. Segments tab, then Recommendations tab. |
-| 15:10–16:00 | Leave this folder. Continue in [03-reinforcement-learning](../03-reinforcement-learning/). |
+| 15:10–16:00 | Optional: reinforcement game (separate workshop). |
 
 ## What you build
 
@@ -42,7 +42,7 @@ By the end of this workshop, you can:
 
 ## The data
 
-`data/fresh_and_good_day2.csv` is the Day 1 customer file plus two planted July columns. `lib/leaks.py` builds this copy from `01-supervised-learning/data/fresh_and_good_customers.csv` and does not change the Day 1 file.
+`data/fresh_and_good_day2.csv` is `data/fresh_and_good_customers.csv` plus two planted July columns. `lib/leaks.py` builds that copy.
 
 The July labels are in the public file. There is no hidden test and no hidden basket file. Validation scores and precision@k use held-out rows from these public tables.
 
@@ -59,7 +59,7 @@ The July labels are in the public file. There is no hidden test and no hidden ba
 
 ## Before class
 
-Use the Day 1 install for mise 2026.11.3, uv 0.13.7, and Python 3.15.2. The Linux setup was tested. The macOS and Windows commands were not retested for Day 2.
+Install mise 2026.11.3, uv 0.13.7, and Python 3.15.2. The pins are in the repo `mise.toml`. The Linux setup was tested. The macOS and Windows commands were not retested for Day 2.
 
 ## Create the environment
 
@@ -71,7 +71,7 @@ uv sync --frozen
 PYTHONPATH=lib uv run python -m ipykernel install --user --name fresh-and-good-day2 --display-name "Python (fresh-and-good-day2)"
 ```
 
-The repo `mise.toml` sets `PYTHONPATH` to `01-supervised-learning/lib`. Leave that line alone so Day 1 imports still work. For Day 2 commands, set `PYTHONPATH=lib` as the Makefile does. The notebooks put this folder's `lib` first on `sys.path`. Day 2 modules are `leaks`, `rfm`, `segments`, `anomalies`, and `baskets`. Those names are not Day 1 modules.
+For Day 2 commands, set `PYTHONPATH=lib` as the Makefile does. The notebooks put this folder's `lib` first on `sys.path`. Day 2 modules are `leaks`, `rfm`, `segments`, `anomalies`, and `baskets`.
 
 `uv.lock` installs PyYAML 6.0.3 from source because that release has no cp315 wheel. If the build fails, check that your laptop has a C compiler.
 
@@ -97,7 +97,7 @@ The form has a Segments tab and a Recommendations tab. If a table is missing, th
 
 ## If you finish early
 
-Business: sketch a campaign cost and one retained-customer value for each segment. Engineer: use the segment id when you pick the product list. Neither is required. There is no gridworld notebook in this folder.
+Business: sketch a campaign cost and one retained-customer value for each segment. Engineer: use the segment id when you pick the product list. Neither is required.
 
 ## Checks for the teaching team
 

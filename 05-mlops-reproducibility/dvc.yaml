@@ -2,7 +2,7 @@ stages:
   prepare:
     cmd: env PYTHONPATH=lib uv run --no-sync python -m prepare
     deps:
-      - ../01-supervised-learning/data/fresh_and_good_customers.csv
+      - data/fresh_and_good_customers.csv
       - lib/prepare.py
       - lib/schema.py
       - lib/files.py
