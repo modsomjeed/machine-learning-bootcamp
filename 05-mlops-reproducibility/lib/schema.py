@@ -3,7 +3,7 @@ from datetime import datetime
 from pathlib import Path
 
 MODULE = Path(__file__).resolve().parents[1]
-DAY1_CSV = MODULE.parent / "01-supervised-learning" / "data" / "fresh_and_good_customers.csv"
+DAY1_CSV = MODULE / "data" / "fresh_and_good_customers.csv"
 
 CUSTOMERS_PARQUET = MODULE / "data" / "customers.parquet"
 TRAIN_PARQUET = MODULE / "data" / "train_features.parquet"

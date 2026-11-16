@@ -1,4 +1,4 @@
-# mise.toml still points PYTHONPATH at Day 1's lib. env overrides it for these commands only.
+# These commands set PYTHONPATH to this folder's lib.
 
 HERE := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 UV := mise exec -- env PYTHONPATH=lib:airflow/dags uv
@@ -15,7 +15,7 @@ help:
 		'  make sync    uv sync --frozen' \
 		'  make kernel  register the fresh-and-good-day5 kernel' \
 		'  make run     plain Python pipeline, no Airflow' \
-		'  make vendor  copy the Day 1 CSV into the Airflow dags folder' \
+		'  make vendor  copy the customer CSV into the Airflow dags folder' \
 		'  make app     start the form and the monitor page' \
 		'  make test    teaching-team checks'
 
@@ -32,7 +32,7 @@ run:
 
 vendor:
 	mkdir -p $(HERE)/airflow/dags/vendor
-	cp $(HERE)/../01-supervised-learning/data/fresh_and_good_customers.csv $(HERE)/airflow/dags/vendor/fresh_and_good_customers.csv
+	cp $(HERE)/data/fresh_and_good_customers.csv $(HERE)/airflow/dags/vendor/fresh_and_good_customers.csv
 
 app:
 	cd $(HERE) && $(UV) run --no-sync python -m streamlit run app.py --server.headless true --server.port 8505

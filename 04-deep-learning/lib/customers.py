@@ -1,7 +1,7 @@
-"""Day 1 customers, read only, and a random forest versus an MLP.
+"""Customers, read only, and a random forest versus an MLP.
 
-The forest settings match ``01-supervised-learning/lib/pipelines.py``. This
-module does not import that file and does not write the Day 1 CSV.
+The forest uses 80 trees, min_samples_leaf 5, and seed 42. This module does
+not write the customer CSV.
 """
 
 import time
@@ -20,7 +20,7 @@ from sklearn.exceptions import ConvergenceWarning
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 MODULE = Path(__file__).resolve().parents[1]
-DAY1_CSV = MODULE.parent / "01-supervised-learning" / "data" / "fresh_and_good_customers.csv"
+DAY1_CSV = MODULE / "data" / "fresh_and_good_customers.csv"
 
 NUMERIC = (
     "tenure_days",

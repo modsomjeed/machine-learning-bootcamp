@@ -1,5 +1,5 @@
 # Day 2 workshop commands. Run make from this folder.
-# mise.toml still points PYTHONPATH at Day 1's lib. env overrides it for these commands only.
+# These commands set PYTHONPATH to this folder's lib.
 
 HERE := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 UV := mise exec -- env PYTHONPATH=lib uv

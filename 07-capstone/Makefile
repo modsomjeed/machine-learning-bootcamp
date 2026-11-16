@@ -1,4 +1,4 @@
-# mise.toml still points PYTHONPATH at Day 1's lib. The app inserts Day 4 and Day 5 on sys.path itself.
+# The app inserts Day 4 and Day 5 on sys.path itself.
 
 HERE := $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 UV := mise exec -- uv

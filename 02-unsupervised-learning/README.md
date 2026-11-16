@@ -42,7 +42,7 @@ By the end of this workshop, you can:
 
 ## The data
 
-`data/fresh_and_good_day2.csv` is the Day 1 customer file plus two planted July columns. `lib/leaks.py` builds this copy from `01-supervised-learning/data/fresh_and_good_customers.csv` and does not change the Day 1 file.
+`data/fresh_and_good_day2.csv` is `data/fresh_and_good_customers.csv` plus two planted July columns. `lib/leaks.py` builds that copy.
 
 The July labels are in the public file. There is no hidden test and no hidden basket file. Validation scores and precision@k use held-out rows from these public tables.
 
@@ -71,7 +71,7 @@ uv sync --frozen
 PYTHONPATH=lib uv run python -m ipykernel install --user --name fresh-and-good-day2 --display-name "Python (fresh-and-good-day2)"
 ```
 
-The repo `mise.toml` sets `PYTHONPATH` to `01-supervised-learning/lib`. Leave that line alone so Day 1 imports still work. For Day 2 commands, set `PYTHONPATH=lib` as the Makefile does. The notebooks put this folder's `lib` first on `sys.path`. Day 2 modules are `leaks`, `rfm`, `segments`, `anomalies`, and `baskets`. Those names are not Day 1 modules.
+For Day 2 commands, set `PYTHONPATH=lib` as the Makefile does. The notebooks put this folder's `lib` first on `sys.path`. Day 2 modules are `leaks`, `rfm`, `segments`, `anomalies`, and `baskets`.
 
 `uv.lock` installs PyYAML 6.0.3 from source because that release has no cp315 wheel. If the build fails, check that your laptop has a C compiler.
 

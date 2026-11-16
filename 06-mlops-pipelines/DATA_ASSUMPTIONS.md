@@ -1,6 +1,6 @@
 # Data assumptions
 
-The only customer table is Day 1's `01-supervised-learning/data/fresh_and_good_customers.csv`. This day does not generate a new table. The file has 2,400 rows and no customer id. Ids `FG0000` through `FG2399` follow the file's row order, same as Day 4.
+The only customer table is `data/fresh_and_good_customers.csv` in this folder. This day does not generate a new table. The file has 2,400 rows and no customer id. Ids `FG0000` through `FG2399` follow the file's row order, same as Day 4.
 
 This pipeline trains on the June snapshot columns only. It does not build the derived column from Day 4's skew hunt. July labels stay out of the model matrix. `churned` is the target.
 

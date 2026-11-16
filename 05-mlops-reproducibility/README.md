@@ -17,7 +17,7 @@ Run the commands on this page from `05-mlops-reproducibility` (this folder), unl
 
 Build a form that scores one customer id. The model name is `fresh-and-good-churn`. The alias is `champion`. Feast returns the feature row for that id.
 
-The source table is Day 1's CSV. This day does not generate a new table. Read `DATA_ASSUMPTIONS.md` before you start. The Day 1 file has no customer id. This day assigns `FG0000` through `FG2399` from the file's row order.
+The source table is `data/fresh_and_good_customers.csv` in this folder. This day does not generate a new table. Read `DATA_ASSUMPTIONS.md` before you start. The file has no customer id. This day assigns `FG0000` through `FG2399` from the file's row order.
 
 ## Python 3.14.10
 

@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 MODULE = Path(__file__).resolve().parents[1]
-DAY1_CSV = MODULE.parent / "01-supervised-learning" / "data" / "fresh_and_good_customers.csv"
+DAY1_CSV = MODULE / "data" / "fresh_and_good_customers.csv"
 DAY2_CSV = MODULE / "data" / "fresh_and_good_day2.csv"
 
 LABELS = ("churned", "next_month_spend_thb")

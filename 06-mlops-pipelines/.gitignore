@@ -3,6 +3,7 @@ mlruns/
 data/*.parquet
 data/*.json
 data/*.csv
+!data/fresh_and_good_customers.csv
 data/*.tmp
 airflow/dags/vendor/
 airflow/logs/*

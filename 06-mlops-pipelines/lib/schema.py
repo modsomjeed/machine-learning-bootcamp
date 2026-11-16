@@ -2,7 +2,7 @@ import re
 from pathlib import Path
 
 MODULE = Path(__file__).resolve().parents[1]
-DAY1_CSV = MODULE.parent / "01-supervised-learning" / "data" / "fresh_and_good_customers.csv"
+DAY1_CSV = MODULE / "data" / "fresh_and_good_customers.csv"
 DAGS = MODULE / "airflow" / "dags"
 VENDOR_CSV = DAGS / "vendor" / "fresh_and_good_customers.csv"
 
@@ -65,5 +65,5 @@ def source_csv() -> Path:
     if DAY1_CSV.is_file():
         return DAY1_CSV
     raise FileNotFoundError(
-        "Missing the Day 1 CSV. Run make vendor from 06-mlops-pipelines, or keep the Day 1 folder beside this one."
+        "Missing data/fresh_and_good_customers.csv. Run make vendor from 06-mlops-pipelines."
     )

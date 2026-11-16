@@ -20,7 +20,7 @@ That calls ingest, validate, features, train, evaluate, and register, in that or
 
 The stock compose file mounts `dags`, `logs`, `plugins`, and `config`. It does not mount the rest of this repo, and the Airflow image does not include pandas, scikit-learn, or MLflow. Two limits follow.
 
-The tasks read the Day 1 CSV. From this folder, copy it into the mounted dags folder:
+The tasks read the customer CSV. From this folder, copy it into the mounted dags folder:
 
 ```sh
 make vendor

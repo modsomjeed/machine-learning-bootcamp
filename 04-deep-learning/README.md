@@ -55,7 +55,7 @@ Humans as convolution filters. One person slides the 2 by 2 kernel in the OpenCV
 
 ## The data
 
-Churn uses the Day 1 file, `01-supervised-learning/data/fresh_and_good_customers.csv`. This folder reads it and does not write it. The split is the Day 1 split: seed 42, 1440 train, 480 validation, 480 test. Leave the test rows unused.
+Churn uses `data/fresh_and_good_customers.csv` in this folder. The split is seed 42, 1440 train, 480 validation, 480 test. Leave the test rows unused.
 
 Product images are Fashion-MNIST when `data/fashion/` contains the four IDX files. Those files are not in git. The license is MIT, Zalando SE, 2017. See [data/DATA_DICTIONARY.md](data/DATA_DICTIONARY.md). If the files are missing, the notebooks use `sklearn.datasets.load_digits`. There is no download for digits.
 
@@ -117,7 +117,7 @@ uv sync --frozen
 PYTHONPATH=lib uv run python -m ipykernel install --user --name fresh-and-good-day3 --display-name "Python (fresh-and-good-day3)"
 ```
 
-The repo `mise.toml` sets `PYTHONPATH` to `01-supervised-learning/lib`. Leave that line alone so Day 1 imports still work. For Day 3 commands, set `PYTHONPATH=lib` as the Makefile does. The notebooks put this folder's `lib` first on `sys.path`.
+For Day 3 commands, set `PYTHONPATH=lib` as the Makefile does. The notebooks put this folder's `lib` first on `sys.path`.
 
 MLflow 3.18 keeps the filesystem tracking store only if you opt in. The notebooks and the Makefile set `MLFLOW_ALLOW_FILE_STORE=true`. Runs are files under `tracking/`. Nothing is uploaded. `tracking/` is gitignored. This day does not register a model.
 

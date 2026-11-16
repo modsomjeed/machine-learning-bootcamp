@@ -1,6 +1,6 @@
 # Data assumptions
 
-Fresh and Good is a fictional Bangkok online grocery. The only customer table is Day 1's `01-supervised-learning/data/fresh_and_good_customers.csv`. This day does not generate a new table. The Day 1 file has 2,400 rows, seed 42, and a snapshot date of 30 June 2026. Feature columns stop on that date. `churned` and `next_month_spend_thb` are July labels.
+Fresh and Good is a fictional Bangkok online grocery. The only customer table is `data/fresh_and_good_customers.csv` in this folder. This day does not generate a new table. The file has 2,400 rows, seed 42, and a snapshot date of 30 June 2026. Feature columns stop on that date. `churned` and `next_month_spend_thb` are July labels.
 
 The Day 1 file has no customer id. This day assigns `FG0000` through `FG2399` from the file's row order. The id stays stable only while that CSV is unchanged.
 

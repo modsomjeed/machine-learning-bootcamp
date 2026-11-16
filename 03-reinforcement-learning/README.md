@@ -37,7 +37,7 @@ uv sync --frozen
 PYTHONPATH=lib uv run python -m ipykernel install --user --name fresh-and-good-rl --display-name "Python (fresh-and-good-rl)"
 ```
 
-The repo `mise.toml` sets `PYTHONPATH` to `01-supervised-learning/lib`. Leave that line alone. For these commands, set `PYTHONPATH=lib` as the Makefile does. The notebook puts this folder's `lib` first on `sys.path`.
+For these commands, set `PYTHONPATH=lib` as the Makefile does. The notebook puts this folder's `lib` first on `sys.path`.
 
 `uv.lock` installs PyYAML 6.0.3 from source because that release has no cp315 wheel. If the build fails, check that your laptop has a C compiler.
 
