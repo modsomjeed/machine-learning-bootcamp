@@ -1,9 +1,7 @@
 # Data assumptions
 
-Day 6 does not add a table. The form reads the Day 5 feature file and the Day 5 MLflow alias. Those were built from `fresh_and_good_customers.csv`, 2,400 rows, with ids `FG0000` through `FG2399` taken from file order.
+This folder does not read another day's files. The customer table is `data/fresh_and_good_customers.csv` here. It has 2,400 rows and no customer id. `make prepare` assigns `FG0000` through `FG2399` from file order, trains on the June snapshot columns, and writes the feature table, the drift tables, the MLflow alias, and the Feast online store in this folder.
 
-Feast on the third page is the Day 4 store. It is a stretch. If `make feast` was not run on Day 4, that page shows the error and the rest of the demo still runs.
+`churned` is the label. July spend is not a feature. The fit is one 80/20 split with seed 42. The alias moves only when the held-out ROC-AUC is at least 0.70. A monitor column is flagged when PSI is at least 0.2.
 
-The PSI line and the 0.70 gate are the Day 5 numbers. This page does not choose a new gate.
-
-Who signs checkpoint 1 is the TA or the instructor. Which of those two people is in the room is not settled.
+Who signs checkpoint 1 is the TA or the instructor. TA availability is not settled.

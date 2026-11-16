@@ -1,6 +1,6 @@
 # Day 6: Capstone
 
-Demo day. You pull the week into one form and one 8-minute story. The form scores a customer from the Day 5 alias, shows the drift table, and can look a customer up in Feast when Day 4 was materialized.
+Demo day. You have one form and one 8-minute story. The form, the model, the drift tables, and the Feast lookup all live in this folder.
 
 - [Plan](plan/one_page.md) and [30-day plan](plan/thirty_day.md)
 - [Rubric cards](rubric/cards.md)
@@ -10,17 +10,16 @@ Demo day. You pull the week into one form and one 8-minute story. The form score
 - [Demo form](app.py)
 - [Data assumptions](DATA_ASSUMPTIONS.md)
 
-Run the commands on this page from `07-capstone`. This folder uses Python 3.14.10 so it can import the Day 4 Feast code and the Day 5 pipeline code. `uv sync` reads `.python-version`. You do not change the repo `mise.toml`.
+Run the commands on this page from `07-capstone`. This folder uses Python 3.14.10. `uv sync` reads `.python-version`. Tool pins for mise and uv are in the repo `mise.toml`.
 
 ## Definition of done
 
 You are done when a classmate can do all of these from the READMEs, without you typing for them.
 
-- Day 4 `dvc repro` a second time prints that the pipeline is up to date.
-- The form on this page loads `fresh-and-good-churn` at alias `champion`.
-- The Day 5 runner, or the Airflow dag, registered a model that passed the 0.70 gate.
+- `make prepare` in this folder registers `fresh-and-good-churn` at alias `champion` when the held-out ROC-AUC is at least 0.70.
+- The form loads that alias and scores `FG0010`.
 - The monitor page opens and you can say retrain or rollback if a column crosses 0.2 PSI.
-- Feast lookup works, or you marked it as a stretch you are not demoing.
+- Feast lookup in this folder returns a plan and an order count for that id.
 - `plan/one_page.md` is filled and signed.
 - You have rehearsed the demo once at 8 minutes.
 
@@ -46,12 +45,11 @@ Peer votes. Each person has 3 votes. You cannot vote for your own team. Write th
 
 ## Create the environment
 
-Day 5 has to have been run once so `data/features.parquet` and `mlruns` exist. Day 4 Feast is only required for the third page.
-
 ```sh
 mise install
 uv sync --frozen
 uv run python -m ipykernel install --user --name fresh-and-good-day6 --display-name "Python (fresh-and-good-day6)"
+make prepare
 ```
 
 ## Run the form
@@ -60,7 +58,7 @@ uv run python -m ipykernel install --user --name fresh-and-good-day6 --display-n
 uv run python -m streamlit run app.py --server.port 8506
 ```
 
-Score `FG0010`. Expect a churn probability of `32.7%`, the same number as Day 5, because this form loads that alias. The health check is:
+Score `FG0010`. Expect a churn probability of `32.7%`. The health check is:
 
 ```sh
 curl --fail http://127.0.0.1:8506/_stcore/health
@@ -68,7 +66,7 @@ curl --fail http://127.0.0.1:8506/_stcore/health
 
 Expect `ok`.
 
-The Feast page for `FG0010` shows plan `monthly` and `2` orders when Day 4 was materialized.
+The Feast page for `FG0010` shows plan `monthly` and `2` orders after `make prepare`.
 
 ## After the demo
 
@@ -76,7 +74,7 @@ Fill [plan/thirty_day.md](plan/thirty_day.md) before you leave.
 
 ## Library versions
 
-Same pins as Day 4 and Day 5, on Python 3.14.10.
+Pinned in this folder's `pyproject.toml`, on Python 3.14.10.
 
 | Package | Version |
 | --- | --- |

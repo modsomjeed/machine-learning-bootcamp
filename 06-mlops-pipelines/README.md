@@ -2,7 +2,7 @@
 
 Day 5 of the Machine Learning Bootcamp. You run the Fresh and Good training tasks in order, keep a weak model off the alias, and read a drift check before you decide to retrain or roll back.
 
-If you skipped Day 4's Airflow clinic, spend 15 minutes on [Airflow up](../05-mlops-reproducibility/airflow/README.md). Then come back here.
+The Airflow steps for this folder are in [airflow/README.md](airflow/README.md). If Docker is not installed, use `make run`.
 
 - 5.1 [Run the pipeline](00_pipeline.ipynb)
 - 5.2 [Break the pipeline](01_bug_bounty.ipynb)
@@ -15,7 +15,7 @@ If you skipped Day 4's Airflow clinic, spend 15 minutes on [Airflow up](../05-ml
 
 Run the commands on this page from `06-mlops-pipelines` (this folder), unless a step says otherwise.
 
-This folder uses Python 3.14.10, the same pin as Day 4. `uv sync` reads `.python-version`. You do not change the repo `mise.toml`.
+This folder uses Python 3.14.10. `uv sync` reads `.python-version`. Tool pins for mise and uv are in the repo `mise.toml`.
 
 ## What you build
 

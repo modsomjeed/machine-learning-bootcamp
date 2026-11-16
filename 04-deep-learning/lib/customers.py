@@ -36,7 +36,7 @@ CATEGORICAL = ("district", "plan", "primary_aisle")
 FEATURES = NUMERIC + CATEGORICAL
 TARGET = "churned"
 SEED = 42
-# Same fractions as Day 1: 20% test, then 25% of the rest as validation.
+# 20% test, then 25% of the rest as validation.
 TEST_FRACTION = 0.20
 VALIDATION_FRACTION_OF_REST = 0.25
 
@@ -153,7 +153,7 @@ def fit_timed(pipeline: Pipeline, train: pd.DataFrame) -> float:
 
 
 def compare_models(train: pd.DataFrame, validation: pd.DataFrame, hidden_layer_sizes=(32,)):
-    """Fit the Day 1 forest and one MLP. Scores are validation ROC-AUC."""
+    """Fit the forest and one MLP. Scores are validation ROC-AUC."""
     forest = forest_pipeline()
     forest_seconds = fit_timed(forest, train)
     network = mlp_pipeline(hidden_layer_sizes=hidden_layer_sizes)

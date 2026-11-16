@@ -1,6 +1,6 @@
 # Airflow for the training dag
 
-If you skipped Day 4's Airflow clinic, spend the first 15 minutes on that clinic before this dag. The steps and the memory floor are in `05-mlops-reproducibility/airflow/README.md`. This folder has its own copy of the same official Airflow 3.4.0 `docker-compose.yaml`, unmodified, from:
+This folder has its own copy of the official Airflow 3.4.0 `docker-compose.yaml`, unmodified, from:
 
 https://airflow.apache.org/docs/apache-airflow/3.4.0/docker-compose.yaml
 

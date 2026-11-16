@@ -1,4 +1,10 @@
 .venv/
+mlruns/
+data/*.parquet
+data/*.json
+feature_repo/data/*.db
+feature_repo/data/*.db-journal
+feature_repo/data/*.parquet
 __pycache__/
 .pytest_cache/
 .ipynb_checkpoints/

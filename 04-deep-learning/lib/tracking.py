@@ -1,4 +1,4 @@
-"""Local MLflow file store. Log a run. Do not register a model; that is Day 4."""
+"""Local MLflow file store. Log a run. This module does not register a model."""
 
 import logging
 import os

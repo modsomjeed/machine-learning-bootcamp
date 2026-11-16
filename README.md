@@ -26,4 +26,4 @@ Run the churn training tasks in order, with a gate before the alias moves. The f
 
 ### Day 6: [Capstone](07-capstone/)
 
-Demo the week in 8 minutes. The form scores the pipeline model, shows drift, and can look a customer up in Feast. Work in `07-capstone/`.
+Demo in 8 minutes. The form in that folder scores a customer, shows drift, and can look a customer up in Feast. Work in `07-capstone/`.

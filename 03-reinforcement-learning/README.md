@@ -1,11 +1,11 @@
 # Reinforcement learning
 
-This is the 15:10–16:00 block on Day 2. It is not part of `02-unsupervised-learning`. You play four snack machines with an epsilon-greedy rule.
+You play four snack machines with an epsilon-greedy rule. This folder is its own workshop.
 
 - 3.1 [Four snack machines](00_bandit.ipynb)
 - 3.2 [A small grid](01_q_learning.ipynb), extra if the bandit is finished
 
-Run the commands on this page from `03-reinforcement-learning` (this folder). Tool versions are pinned in the repo `mise.toml`. This folder has its own `pyproject.toml` and uses the same package versions as Day 2. Do not edit Day 1.
+Run the commands on this page from `03-reinforcement-learning` (this folder). Tool versions are pinned in the repo `mise.toml`. This folder has its own `pyproject.toml`.
 
 ## Steps
 

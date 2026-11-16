@@ -1,4 +1,4 @@
-"""Day 2 table: the Day 1 customers plus two columns that use July."""
+"""Customer table plus two columns that use July."""
 
 import sys
 from pathlib import Path
@@ -23,7 +23,7 @@ def load_day1() -> pd.DataFrame:
 
 
 def plant_leaks(frame: pd.DataFrame, seed: int = SEED) -> pd.DataFrame:
-    """Add the two July columns. Row order follows the Day 1 file."""
+    """Add the two July columns. Row order follows the customer file."""
     out = frame.copy()
     churned = out["churned"].to_numpy()
     rng = np.random.default_rng(seed)

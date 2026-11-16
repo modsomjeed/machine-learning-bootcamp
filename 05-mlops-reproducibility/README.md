@@ -29,7 +29,7 @@ Feast 0.67.0 requires `pandas<3`. The newest pandas 2 release with a wheel is pa
 
 ## Create the environment
 
-Install mise 2026.11.3 the same way as Day 1, if it is not on your `PATH` yet. From this folder:
+Install mise 2026.11.3, uv 0.13.7, and Python 3.14.10 if they are not on your `PATH` yet. The tool pins are in the repo `mise.toml`. This folder's `.python-version` selects Python 3.14.10. From this folder:
 
 ```sh
 mise install
@@ -142,7 +142,7 @@ Change `train.C` in `params.yaml` and run `dvc repro` again. Only the `train` st
 
 ## Airflow clinic
 
-The clinic is `airflow/README.md`. It uses the official Apache Airflow 3.4.0 compose file, unmodified. The UI is http://localhost:8080. Docker needs at least 4 GB of memory, 2 CPUs, and 10 GB of disk. One machine per team is enough. If Docker is not installed, skip the clinic. Day 5 has a plain Python runner that does not install Airflow.
+The clinic is `airflow/README.md` in this folder. It uses the official Apache Airflow 3.4.0 compose file, unmodified. The UI is http://localhost:8080. Docker needs at least 4 GB of memory, 2 CPUs, and 10 GB of disk. One machine per team is enough. If Docker is not installed, skip the clinic. `dvc repro` in this folder trains the model without Airflow.
 
 ## Library versions
 
