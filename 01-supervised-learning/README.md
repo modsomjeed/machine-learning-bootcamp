@@ -26,14 +26,36 @@ How many baht will each customer pay in that same month? That is regression. `ne
 
 Features stop on 30 June 2026. That window is 2 April 2026 through 30 June 2026, 90 days. Both July columns are labels, not features. Read `data/DATA_DICTIONARY.md` before you model. The table has no customer id, email, or phone.
 
+## The path
+
+Each box is one stage. The notebook name is where you do that stage. The test rows stay closed until the evaluation box.
+
+```mermaid
+flowchart TD
+    frame["Frame the question: 00_start"]
+    look["Load and look: 01_eda"]
+    split["Split train, validation, test: 02_split"]
+    engineer["Engineer features: 03_train_cv"]
+    prep["Preprocess in a pipeline: 03_train_cv"]
+    select["Select features: 03_train_cv and 06_regression"]
+    validate["Baseline and cross-validation: 02_split and 03_train_cv"]
+    tune["Tune hyperparameters: 04_tune and 06_regression"]
+    choose["Choose a model on validation: 04_tune and 05_evaluate"]
+    test["Score the test rows once: 05_evaluate and 06_regression"]
+    form["Save and open the form: app.py"]
+    frame --> look --> split --> engineer --> prep --> select --> validate --> tune --> choose --> test --> form
+```
+
 ## Objectives
 
 By the end of this workshop, you can:
 
 - Say what the train rows, the validation rows, and the test rows are for.
 - Compute a churn rate and name three facts from the table.
+- Add two June features and keep a short list with `SelectKBest`, inside a pipeline.
 - Fit logistic regression and a random forest inside a preprocessing pipeline.
-- Compare those models with a majority-class baseline on validation ROC-AUC.
+- Check those models with cross-validation, then a small search over `C` and the forest settings.
+- Choose one churn model from the validation ROC-AUC, not from the test rows.
 - Choose a threshold on the validation rows from the team's cost card.
 - Score the churn test rows once, then save the churn bundle.
 - Compare a mean spend baseline with ridge regression using MAE and RMSE in THB, then save the spend bundle.
@@ -152,6 +174,8 @@ Run the notebooks in order.
 
 Each notebook loads the CSV itself. You can restart the kernel between files.
 
+Feature engineering, feature selection, and the logistic `C` search add about 30 minutes. The form checkpoint moves from 15:25 to 15:50. If the room cannot give that time, skip the forest exercise in notebook 03 and call `tune_forest` with `n_iter=4`. Do not skip the test-set cells or the form.
+
 The completed setup cells confirm the table and split:
 
 ```text
@@ -170,12 +194,13 @@ Fill each exercise before running the notebook from top to bottom. `None` and `N
 | `00_start.ipynb` | `soda_shopper`, `format_customer`, `quiet_customer` |
 | `01_eda.ipynb` | `no_plan`, `churn_by_plan`, `churn_rate`, and three sentences |
 | `02_split.ipynb` | `majority_accuracy`, `threshold_set` |
-| `03_train_cv.ipynb` | the forest cross-validation mean and the logistic validation ROC-AUC |
-| `04_tune.ipynb` | `beats_baseline`, `gap`, and one sentence |
+| `03_train_cv.ipynb` | `add_features`, the `SelectKBest` count, the forest cross-validation mean, and the logistic validation ROC-AUC |
+| `04_tune.ipynb` | `best_C`, `beats_baseline`, `gap`, `chosen_model`, and one sentence |
 | `05_evaluate.ipynb` | test precision, test recall, and test ROC-AUC |
+| `06_regression.ipynb` | validation MAE, test MAE, test RMSE, and the selected spend MAE |
 | `app.py` | `churn_decision` |
 
-If you are still in an earlier notebook at 15:25, ask the instructor for both checkpoint bundles. Follow [Resume points](checkpoints/README.md) to use them.
+If you are still in an earlier notebook at 15:50, ask the instructor for both checkpoint bundles. Follow [Resume points](checkpoints/README.md) to use them.
 
 A joblib file can run code when loaded. Load only a model you fit in class or receive from the instructor in the room. Do not download a model from the internet or commit a saved model.
 
@@ -203,7 +228,7 @@ The kernel list has no `fresh-and-good-day1`. From this folder, run the `uv run 
 
 The form says there is no model file. Finish notebook 05 and notebook 06, or ask for both instructor files, then refresh.
 
-The form says `Finish churn_decision`. That is the 15:25 exercise. Fill in `churn_decision` in `app.py` and save the file. Streamlit reruns the script.
+The form says `Finish churn_decision`. That is the 15:50 exercise. Fill in `churn_decision` in `app.py` and save the file. Streamlit reruns the script.
 
 `streamlit` says the port is in use. Run `uv run python -m streamlit run app.py --server.port 8502`.
 
@@ -230,7 +255,7 @@ The versions below were resolved by `uv lock` on CPython 3.15.2. Use `uv.lock`. 
 | numpy | 2.5.4 | generator |
 | pandas | 3.1.1 | [read_csv](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html) |
 | altair | 6.3.0 | [Vega-Altair](https://altair-viz.github.io/) charts in notebook 01 |
-| scikit-learn | 1.9.1 | [Pipelines](https://scikit-learn.org/stable/modules/compose.html), [RandomizedSearchCV](https://scikit-learn.org/1.9/modules/generated/sklearn.model_selection.RandomizedSearchCV.html), [MAE](https://scikit-learn.org/1.9/modules/generated/sklearn.metrics.mean_absolute_error.html), [RMSE](https://scikit-learn.org/1.9/modules/generated/sklearn.metrics.root_mean_squared_error.html) |
+| scikit-learn | 1.9.1 | [Pipelines](https://scikit-learn.org/1.9/modules/compose.html), [StratifiedKFold](https://scikit-learn.org/1.9/modules/generated/sklearn.model_selection.StratifiedKFold.html), [SelectKBest](https://scikit-learn.org/1.9/modules/generated/sklearn.feature_selection.SelectKBest.html), [GridSearchCV](https://scikit-learn.org/1.9/modules/generated/sklearn.model_selection.GridSearchCV.html), [RandomizedSearchCV](https://scikit-learn.org/1.9/modules/generated/sklearn.model_selection.RandomizedSearchCV.html), [MAE](https://scikit-learn.org/1.9/modules/generated/sklearn.metrics.mean_absolute_error.html), [RMSE](https://scikit-learn.org/1.9/modules/generated/sklearn.metrics.root_mean_squared_error.html) |
 | joblib | 1.6.0 | save and load the bundle |
 | streamlit | 1.67.0 | [AppTest](https://docs.streamlit.io/develop/api-reference/app-testing/st.testing.v1.apptest) |
 | jupyter | 1.1.1 | notebook server |

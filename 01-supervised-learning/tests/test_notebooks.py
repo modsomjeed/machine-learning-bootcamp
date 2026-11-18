@@ -41,6 +41,16 @@ def test_public_notebooks_keep_placeholders():
     evaluate = (module_root() / "05_evaluate.ipynb").read_text()
     assert "test_precision = None" in evaluate
     assert "test_precision = float" not in evaluate
+    train = (module_root() / "03_train_cv.ipynb").read_text()
+    assert "Add orders_per_week and recency_over_45." in train
+    assert 'out["orders_per_week"]' not in train
+    assert "SelectKBest" in train
+    tune = (module_root() / "04_tune.ipynb").read_text()
+    assert "GridSearchCV" in tune
+    assert "chosen_model = None" in tune
+    spend = (module_root() / "06_regression.ipynb").read_text()
+    assert "f_regression" in spend
+    assert "spend_selected_mae = None" in spend
 
 
 def test_boot_cell_finds_the_module_from_supported_folders():
