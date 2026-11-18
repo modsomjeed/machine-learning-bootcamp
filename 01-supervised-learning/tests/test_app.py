@@ -4,7 +4,7 @@ from streamlit.testing.v1 import AppTest
 from frame import features_and_target
 from paths import data_csv, module_root
 from persist import save_bundle, save_spend_bundle
-from pipelines import make_logistic_pipeline, make_ridge_pipeline
+from pipelines import make_feature_pipeline, make_logistic_pipeline, make_ridge_pipeline
 from split import split_customers
 from validate import input_errors
 
@@ -101,6 +101,22 @@ def test_form_shows_churn_and_spend_and_rejects_the_wrong_bundle(monkeypatch, tm
     monkeypatch.setenv("FRESH_AND_GOOD_SPEND_BUNDLE", str(churn_path))
     swapped = AppTest.from_file(module_root() / "app.py", default_timeout=30).run()
     assert any("not a spend bundle" in item.value for item in swapped.error)
+
+
+def test_feature_pipeline_bundle_scores_in_the_form(monkeypatch, tmp_path):
+    frame = pd.read_csv(data_csv())
+    train, _validation, _test = split_customers(frame)
+    features, labels = features_and_target(train)
+    pipeline = make_feature_pipeline()
+    pipeline.fit(features, labels)
+    path = tmp_path / "churn_bundle.joblib"
+    save_bundle(path, pipeline, 0.4, 500, 100)
+    monkeypatch.setenv("FRESH_AND_GOOD_CHURN_BUNDLE", str(path))
+    monkeypatch.setenv("FRESH_AND_GOOD_SPEND_BUNDLE", str(tmp_path / "missing-spend.joblib"))
+    at = AppTest.from_file(module_root() / "app.py", default_timeout=30).run()
+    at.form_submit_button[0].click().run()
+    assert at.metric
+    assert "%" in at.metric[0].value
 
 
 def test_public_app_keeps_the_exercise():

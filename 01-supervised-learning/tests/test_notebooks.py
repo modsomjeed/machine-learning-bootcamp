@@ -44,10 +44,14 @@ def test_public_notebooks_keep_placeholders():
     train = (module_root() / "03_train_cv.ipynb").read_text()
     assert "Add orders_per_week and recency_over_45." in train
     assert 'out["orders_per_week"]' not in train
-    assert "SelectKBest" in train
+    assert "orders_kept = None" in train
+    assert "logistic_val_auc" not in train
     tune = (module_root() / "04_tune.ipynb").read_text()
-    assert "GridSearchCV" in tune
+    assert "make_feature_pipeline" in tune
+    assert "tuned_logistic" in tune
     assert "chosen_model = None" in tune
+    evaluate = (module_root() / "05_evaluate.ipynb").read_text()
+    assert "tune_feature_logistic" in evaluate
     spend = (module_root() / "06_regression.ipynb").read_text()
     assert "f_regression" in spend
     assert "spend_selected_mae = None" in spend

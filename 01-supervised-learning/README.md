@@ -5,7 +5,7 @@ Day 1 of the Machine Learning Bootcamp. You build two local checks for Fresh and
 - 1.1 [Start and Python](00_start.ipynb)
 - 1.2 [Look at the customers](01_eda.ipynb)
 - 1.3 [Split the rows](02_split.ipynb)
-- 1.4 [Fit on the train rows](03_train_cv.ipynb)
+- 1.4 [Train, cross-validate, engineer, and select features](03_train_cv.ipynb)
 - 1.5 [Compare a small search](04_tune.ipynb)
 - 1.6 [Choose a threshold and check the test rows once](05_evaluate.ipynb)
 - 1.7 [Estimate next-month spend](06_regression.ipynb)
@@ -28,22 +28,26 @@ Features stop on 30 June 2026. That window is 2 April 2026 through 30 June 2026,
 
 ## The path
 
-Each box is one stage. The notebook name is where you do that stage. The test rows stay closed until the evaluation box.
+Each box is one stage. The name on the box is the notebook where you do that stage. The test rows stay closed until the evaluation box.
 
 ```mermaid
 flowchart TD
     frame["Frame the question: 00_start"]
     look["Load and look: 01_eda"]
     split["Split train, validation, test: 02_split"]
+    baseline["Majority baseline: 02_split"]
+    prep["Preprocess and cross-validate: 03_train_cv"]
     engineer["Engineer features: 03_train_cv"]
-    prep["Preprocess in a pipeline: 03_train_cv"]
-    select["Select features: 03_train_cv and 06_regression"]
-    validate["Baseline and cross-validation: 02_split and 03_train_cv"]
-    tune["Tune hyperparameters: 04_tune and 06_regression"]
-    choose["Choose a model on validation: 04_tune and 05_evaluate"]
-    test["Score the test rows once: 05_evaluate and 06_regression"]
+    select["Select features: 03_train_cv"]
+    tune["Tune the forest and logistic C: 04_tune"]
+    choose["Choose a model on validation: 04_tune"]
+    threshold["Choose a threshold on validation: 05_evaluate"]
+    test["Score the churn test rows once: 05_evaluate"]
+    spend["Select spend features and tune ridge: 06_regression"]
+    spendTest["Score the spend test rows once: 06_regression"]
     form["Save and open the form: app.py"]
-    frame --> look --> split --> engineer --> prep --> select --> validate --> tune --> choose --> test --> form
+    frame --> look --> split --> baseline --> prep --> engineer --> select --> tune --> choose --> threshold --> test --> form
+    split --> spend --> spendTest --> form
 ```
 
 ## Objectives
@@ -54,8 +58,8 @@ By the end of this workshop, you can:
 - Compute a churn rate and name three facts from the table.
 - Add two June features and keep a short list with `SelectKBest`, inside a pipeline.
 - Fit logistic regression and a random forest inside a preprocessing pipeline.
-- Check those models with cross-validation, then a small search over `C` and the forest settings.
-- Choose one churn model from the validation ROC-AUC, not from the test rows.
+- Check those models with cross-validation on train folds, then a small search over `C` and the forest settings.
+- Choose one churn model from the validation ROC-AUC. The engineered logistic model is one candidate. The winner is the model the form loads.
 - Choose a threshold on the validation rows from the team's cost card.
 - Score the churn test rows once, then save the churn bundle.
 - Compare a mean spend baseline with ridge regression using MAE and RMSE in THB, then save the spend bundle.
@@ -174,7 +178,7 @@ Run the notebooks in order.
 
 Each notebook loads the CSV itself. You can restart the kernel between files.
 
-Feature engineering, feature selection, and the logistic `C` search add about 30 minutes. The form checkpoint moves from 15:25 to 15:50. If the room cannot give that time, skip the forest exercise in notebook 03 and call `tune_forest` with `n_iter=4`. Do not skip the test-set cells or the form.
+Feature engineering, feature selection, and the logistic `C` search add about 30 minutes. The form checkpoint is 15:50. If the room cannot give that time, skip the forest exercise in notebook 03 and call `tune_forest` with `n_iter=4`. Do not skip the test-set cells or the form.
 
 The completed setup cells confirm the table and split:
 
@@ -194,8 +198,8 @@ Fill each exercise before running the notebook from top to bottom. `None` and `N
 | `00_start.ipynb` | `soda_shopper`, `format_customer`, `quiet_customer` |
 | `01_eda.ipynb` | `no_plan`, `churn_by_plan`, `churn_rate`, and three sentences |
 | `02_split.ipynb` | `majority_accuracy`, `threshold_set` |
-| `03_train_cv.ipynb` | `add_features`, the `SelectKBest` count, the forest cross-validation mean, and the logistic validation ROC-AUC |
-| `04_tune.ipynb` | `best_C`, `beats_baseline`, `gap`, `chosen_model`, and one sentence |
+| `03_train_cv.ipynb` | `add_features`, the `SelectKBest` count, `orders_kept`, and the forest cross-validation mean |
+| `04_tune.ipynb` | `search_c`, `best_C`, `beats_baseline`, `gap`, `chosen_model`, and one sentence |
 | `05_evaluate.ipynb` | test precision, test recall, and test ROC-AUC |
 | `06_regression.ipynb` | validation MAE, test MAE, test RMSE, and the selected spend MAE |
 | `app.py` | `churn_decision` |
