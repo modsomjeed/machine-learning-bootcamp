@@ -1,7 +1,7 @@
 """Two June columns derived from one row.
 
-Notebook 03 asks you to write the same function. Notebooks 04 and 05 call this
-copy so the saved model still has the columns after a kernel restart.
+Notebook 03 asks you to write the same function. The searches in notebooks 04
+and 06 call this copy inside every candidate pipeline.
 """
 
 import pandas as pd

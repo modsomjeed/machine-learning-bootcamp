@@ -47,14 +47,14 @@ def test_public_notebooks_keep_placeholders():
     assert "orders_kept = None" in train
     assert "logistic_val_auc" not in train
     tune = (module_root() / "04_tune.ipynb").read_text()
-    assert "make_feature_pipeline" in tune
-    assert "tuned_logistic" in tune
+    assert "svc_pipeline = None" in tune
     assert "chosen_model = None" in tune
+    assert "CalibratedClassifierCV" in tune
     evaluate = (module_root() / "05_evaluate.ipynb").read_text()
-    assert "tune_feature_logistic" in evaluate
+    assert "CHURN_NAMES" in evaluate
     spend = (module_root() / "06_regression.ipynb").read_text()
-    assert "f_regression" in spend
-    assert "spend_selected_mae = None" in spend
+    assert "hgb_pipeline = None" in spend
+    assert "chosen_spend = None" in spend
 
 
 def test_boot_cell_finds_the_module_from_supported_folders():

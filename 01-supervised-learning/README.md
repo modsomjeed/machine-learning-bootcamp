@@ -39,11 +39,11 @@ flowchart TD
     prep["Preprocess and cross-validate: 03_train_cv"]
     engineer["Engineer features: 03_train_cv"]
     select["Select features: 03_train_cv"]
-    tune["Tune the forest and logistic C: 04_tune"]
+    tune["Search three classifiers: 04_tune"]
     choose["Choose a model on validation: 04_tune"]
     threshold["Choose a threshold on validation: 05_evaluate"]
     test["Score the churn test rows once: 05_evaluate"]
-    spend["Select spend features and tune ridge: 06_regression"]
+    spend["Search three regressors: 06_regression"]
     spendTest["Score the spend test rows once: 06_regression"]
     form["Save and open the form: app.py"]
     frame --> look --> split --> baseline --> prep --> engineer --> select --> tune --> choose --> threshold --> test --> form
@@ -58,8 +58,8 @@ By the end of this workshop, you can:
 - Compute a churn rate and name three facts from the table.
 - Add two June features and keep a short list with `SelectKBest`, inside a pipeline.
 - Fit logistic regression and a random forest inside a preprocessing pipeline.
-- Check those models with cross-validation on train folds, then a small search over `C` and the forest settings.
-- Choose one churn model from the validation ROC-AUC. The engineered logistic model is one candidate. The winner is the model the form loads.
+- Check three classifiers and three regressors with a small grid search on train folds.
+- Choose the churn model from validation ROC-AUC and the spend model from validation MAE. The form loads those two winners.
 - Choose a threshold on the validation rows from the team's cost card.
 - Score the churn test rows once, then save the churn bundle.
 - Compare a mean spend baseline with ridge regression using MAE and RMSE in THB, then save the spend bundle.
@@ -178,7 +178,7 @@ Run the notebooks in order.
 
 Each notebook loads the CSV itself. You can restart the kernel between files.
 
-Feature engineering, feature selection, and the logistic `C` search add about 30 minutes. The form checkpoint is 15:50. If the room cannot give that time, skip the forest exercise in notebook 03 and call `tune_forest` with `n_iter=4`. Do not skip the test-set cells or the form.
+The three churn searches and the three spend searches add a few seconds on the machine used for these ranges. Each search finished in under 2 seconds, so the form checkpoint stays 15:50. If a search is still running after a minute, set `n_jobs=-1` or keep only the first value in each list. Do not skip the test-set cells or the form.
 
 The completed setup cells confirm the table and split:
 
@@ -199,9 +199,9 @@ Fill each exercise before running the notebook from top to bottom. `None` and `N
 | `01_eda.ipynb` | `no_plan`, `churn_by_plan`, `churn_rate`, and three sentences |
 | `02_split.ipynb` | `majority_accuracy`, `threshold_set` |
 | `03_train_cv.ipynb` | `add_features`, the `SelectKBest` count, `orders_kept`, and the forest cross-validation mean |
-| `04_tune.ipynb` | `search_c`, `best_C`, `beats_baseline`, `gap`, `chosen_model`, and one sentence |
+| `04_tune.ipynb` | `svc_pipeline`, `svc_grid`, `chosen_model`, and one sentence |
 | `05_evaluate.ipynb` | test precision, test recall, and test ROC-AUC |
-| `06_regression.ipynb` | validation MAE, test MAE, test RMSE, and the selected spend MAE |
+| `06_regression.ipynb` | `hgb_pipeline`, `hgb_grid`, `chosen_spend`, test MAE, and test RMSE |
 | `app.py` | `churn_decision` |
 
 If you are still in an earlier notebook at 15:50, ask the instructor for both checkpoint bundles. Follow [Resume points](checkpoints/README.md) to use them.

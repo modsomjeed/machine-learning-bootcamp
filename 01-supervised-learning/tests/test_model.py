@@ -5,7 +5,7 @@ from sklearn.metrics import roc_auc_score
 from frame import features_and_target
 from paths import data_csv
 from persist import TASK_CHURN, DecisionBundle, load_bundle, save_bundle, save_spend_bundle
-from pipelines import make_logistic_pipeline, tune_forest
+from pipelines import candidate_spec, fit_named, make_logistic_pipeline, pick_winner
 from schema import CHURN_TARGET, FEATURE_COLUMNS, SPEND_TARGET, TARGET
 from split import split_customers
 from threshold import choose_threshold, labels_at, total_cost
@@ -55,15 +55,26 @@ def test_split_fit_does_not_use_test_rows_for_scaling():
 
 def test_small_search_returns_a_fitted_pipeline():
     frame = pd.read_csv(data_csv())
-    train, _validation, _test = split_customers(frame)
+    train, validation, _test = split_customers(frame)
     x_train, y_train = features_and_target(train)
-    search = tune_forest(x_train.iloc[:600], y_train.iloc[:600], n_iter=2)
+    x_val, y_val = features_and_target(validation)
+    search, seconds = fit_named("logistic", x_train.iloc[:400], y_train.iloc[:400], "churn")
+    assert seconds >= 0
     assert np.isfinite(search.best_score_)
-    proba = search.predict_proba(x_train.iloc[:5])
+    proba = search.predict_proba(x_val.iloc[:5])
     assert proba.shape == (5, 2)
-    assert set(search.best_params_).issubset(
-        {"model__n_estimators", "model__max_depth", "model__min_samples_leaf"}
-    )
+    assert set(search.best_params_) == {"model__C"}
+    model, grid = candidate_spec("svc", "churn")
+    assert "probability" not in model.get_params()
+    assert grid == {"model__estimator__C": [1.0, 10.0]}
+    assert pick_winner(
+        [{"name": "logistic", "validation": 0.8}, {"name": "svc", "validation": 0.7}],
+        "churn",
+    ) == "logistic"
+    assert pick_winner(
+        [{"name": "ridge", "validation": 100.0}, {"name": "forest", "validation": 90.0}],
+        "spend",
+    ) == "forest"
 
 
 def test_bundle_round_trip_and_column_guard(tmp_path):
