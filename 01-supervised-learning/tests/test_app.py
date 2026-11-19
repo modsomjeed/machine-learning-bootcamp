@@ -4,7 +4,8 @@ from streamlit.testing.v1 import AppTest
 from frame import features_and_target
 from paths import data_csv, module_root
 from persist import save_bundle, save_spend_bundle
-from pipelines import make_feature_pipeline, make_logistic_pipeline, make_ridge_pipeline
+from pipelines import candidate_spec, make_candidate_pipeline, make_feature_pipeline, make_logistic_pipeline, make_ridge_pipeline
+from schema import SPEND_TARGET
 from split import split_customers
 from validate import input_errors
 
@@ -117,6 +118,32 @@ def test_feature_pipeline_bundle_scores_in_the_form(monkeypatch, tmp_path):
     at.form_submit_button[0].click().run()
     assert at.metric
     assert "%" in at.metric[0].value
+
+
+def test_winner_pipelines_score_both_targets(monkeypatch, tmp_path):
+    frame = pd.read_csv(data_csv())
+    train, _validation, _test = split_customers(frame)
+    features, labels = features_and_target(train)
+    churn_estimator, _grid = candidate_spec("logistic", "churn")
+    churn = make_candidate_pipeline(churn_estimator, task="churn")
+    churn.fit(features, labels)
+    churn_path = tmp_path / "churn_bundle.joblib"
+    save_bundle(churn_path, churn, 0.4, 500, 100)
+    spend_features, spend_labels = features_and_target(train, SPEND_TARGET)
+    spend_estimator, _grid = candidate_spec("ridge", "spend")
+    spend = make_candidate_pipeline(spend_estimator, task="spend")
+    spend.fit(spend_features, spend_labels)
+    spend_path = tmp_path / "spend_bundle.joblib"
+    save_spend_bundle(spend_path, spend)
+    monkeypatch.setenv("FRESH_AND_GOOD_CHURN_BUNDLE", str(churn_path))
+    monkeypatch.setenv("FRESH_AND_GOOD_SPEND_BUNDLE", str(spend_path))
+    at = AppTest.from_file(module_root() / "app.py", default_timeout=30).run()
+    at.form_submit_button[0].click().run()
+    labels = [item.label for item in at.metric]
+    assert "Churn probability" in labels
+    assert "Estimated next-month spend" in labels
+    assert any(item.value.endswith("%") for item in at.metric)
+    assert any(item.value.endswith("THB") for item in at.metric)
 
 
 def test_public_app_keeps_the_exercise():

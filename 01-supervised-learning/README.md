@@ -6,7 +6,7 @@ Day 1 of the Machine Learning Bootcamp. You build two local checks for Fresh and
 - 1.2 [Look at the customers](01_eda.ipynb)
 - 1.3 [Split the rows](02_split.ipynb)
 - 1.4 [Train, cross-validate, engineer, and select features](03_train_cv.ipynb)
-- 1.5 [Compare a small search](04_tune.ipynb)
+- 1.5 [Search three classifiers, then choose one](04_tune.ipynb)
 - 1.6 [Choose a threshold and check the test rows once](05_evaluate.ipynb)
 - 1.7 [Estimate next-month spend](06_regression.ipynb)
 - 1.8 [Score one customer](app.py)
@@ -28,27 +28,51 @@ Features stop on 30 June 2026. That window is 2 April 2026 through 30 June 2026,
 
 ## The path
 
-Each box is one stage. The name on the box is the notebook where you do that stage. The test rows stay closed until the evaluation box.
+Each box is one stage. The name on the box is the notebook where you do that stage. The test rows stay closed until the evaluation boxes.
 
 ```mermaid
 flowchart TD
     frame["Frame the question: 00_start"]
     look["Load and look: 01_eda"]
     split["Split train, validation, test: 02_split"]
-    baseline["Majority baseline: 02_split"]
+    baseline["Majority baseline, AUC 0.5: 02_split"]
     prep["Preprocess and cross-validate: 03_train_cv"]
     engineer["Engineer features: 03_train_cv"]
-    select["Select features: 03_train_cv"]
-    tune["Tune the forest and logistic C: 04_tune"]
-    choose["Choose a model on validation: 04_tune"]
+    select["SelectKBest k=8: 03_train_cv"]
+    tune["Search three classifiers: 04_tune"]
+    choose["Choose a model on validation AUC: 04_tune"]
     threshold["Choose a threshold on validation: 05_evaluate"]
     test["Score the churn test rows once: 05_evaluate"]
-    spend["Select spend features and tune ridge: 06_regression"]
+    spendEng["Engineer features: 06_regression"]
+    spendSel["SelectKBest k=5: 06_regression"]
+    spendSearch["Search three regressors: 06_regression"]
+    spendChoose["Choose on validation MAE: 06_regression"]
     spendTest["Score the spend test rows once: 06_regression"]
-    form["Save and open the form: app.py"]
-    frame --> look --> split --> baseline --> prep --> engineer --> select --> tune --> choose --> threshold --> test --> form
-    split --> spend --> spendTest --> form
+    save["Save the bundles: 05_evaluate and 06_regression"]
+    form["Open the form: app.py"]
+    frame --> look --> split --> baseline --> prep --> engineer --> select --> tune --> choose --> threshold --> test --> save
+    split --> spendEng --> spendSel --> spendSearch --> spendChoose --> spendTest --> save
+    save --> form
 ```
+
+## What you should roughly see
+
+Churn validation ROC-AUC. The majority baseline is 0.500 and is not a candidate. Logistic wins.
+
+| name | cv AUC | cv std | val AUC | seconds |
+| --- | --- | --- | --- | --- |
+| logistic | 0.789 | 0.010 | 0.796 | 0.2 |
+| forest | 0.787 | 0.007 | 0.790 | 1.6 |
+| svc | 0.754 | 0.010 | 0.753 | 0.7 |
+
+Spend validation MAE in THB. The mean baseline is about 1229 and is not a candidate. Ridge wins.
+
+| name | cv MAE | cv std | val MAE | val RMSE | seconds |
+| --- | --- | --- | --- | --- | --- |
+| ridge | 994 | 16 | 1045 | 1475 | 0.2 |
+| forest | 997 | 11 | 1053 | 1485 | 1.5 |
+| hist_gradient | 1013 | 9 | 1050 | 1485 | 0.9 |
+| mean baseline | 1223 | 39 | 1229 | 1658 |  |
 
 ## Objectives
 
@@ -57,9 +81,9 @@ By the end of this workshop, you can:
 - Say what the train rows, the validation rows, and the test rows are for.
 - Compute a churn rate and name three facts from the table.
 - Add two June features and keep a short list with `SelectKBest`, inside a pipeline.
-- Fit logistic regression and a random forest inside a preprocessing pipeline.
-- Check those models with cross-validation on train folds, then a small search over `C` and the forest settings.
-- Choose one churn model from the validation ROC-AUC. The engineered logistic model is one candidate. The winner is the model the form loads.
+- Fit logistic regression, a random forest, and an SVM for churn. The majority baseline from the split has ROC-AUC 0.5, and each classifier should beat it.
+- Fit ridge, a random forest, and histogram gradient boosting for spend. A mean DummyRegressor is the reference, and each regressor should beat it.
+- Choose the churn model from validation ROC-AUC and the spend model from validation MAE. The form loads those two winners.
 - Choose a threshold on the validation rows from the team's cost card.
 - Score the churn test rows once, then save the churn bundle.
 - Compare a mean spend baseline with ridge regression using MAE and RMSE in THB, then save the spend bundle.
@@ -178,7 +202,7 @@ Run the notebooks in order.
 
 Each notebook loads the CSV itself. You can restart the kernel between files.
 
-Feature engineering, feature selection, and the logistic `C` search add about 30 minutes. The form checkpoint is 15:50. If the room cannot give that time, skip the forest exercise in notebook 03 and call `tune_forest` with `n_iter=4`. Do not skip the test-set cells or the form.
+On the machine used to write these ranges, the three churn searches and the three spend searches each finished in under 2 seconds, so the form checkpoint stays 15:50. If a search is still running after a minute, set `n_jobs=-1` or keep only the first value in each list. Do not skip the test-set cells or the form.
 
 The completed setup cells confirm the table and split:
 
@@ -198,10 +222,10 @@ Fill each exercise before running the notebook from top to bottom. `None` and `N
 | `00_start.ipynb` | `soda_shopper`, `format_customer`, `quiet_customer` |
 | `01_eda.ipynb` | `no_plan`, `churn_by_plan`, `churn_rate`, and three sentences |
 | `02_split.ipynb` | `majority_accuracy`, `threshold_set` |
-| `03_train_cv.ipynb` | `add_features`, the `SelectKBest` count, `orders_kept`, and the forest cross-validation mean |
-| `04_tune.ipynb` | `search_c`, `best_C`, `beats_baseline`, `gap`, `chosen_model`, and one sentence |
+| `03_train_cv.ipynb` | `add_features`, the `SelectKBest` count, `orders_kept`, and the plain forest cross-validation mean |
+| `04_tune.ipynb` | `svc_pipeline`, `svc_grid`, `chosen_model`, and one sentence |
 | `05_evaluate.ipynb` | test precision, test recall, and test ROC-AUC |
-| `06_regression.ipynb` | validation MAE, test MAE, test RMSE, and the selected spend MAE |
+| `06_regression.ipynb` | `hgb_pipeline`, `hgb_grid`, `chosen_spend`, test MAE, and test RMSE |
 | `app.py` | `churn_decision` |
 
 If you are still in an earlier notebook at 15:50, ask the instructor for both checkpoint bundles. Follow [Resume points](checkpoints/README.md) to use them.
@@ -259,7 +283,7 @@ The versions below were resolved by `uv lock` on CPython 3.15.2. Use `uv.lock`. 
 | numpy | 2.5.4 | generator |
 | pandas | 3.1.1 | [read_csv](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html) |
 | altair | 6.3.0 | [Vega-Altair](https://altair-viz.github.io/) charts in notebook 01 |
-| scikit-learn | 1.9.1 | [Pipelines](https://scikit-learn.org/1.9/modules/compose.html), [StratifiedKFold](https://scikit-learn.org/1.9/modules/generated/sklearn.model_selection.StratifiedKFold.html), [SelectKBest](https://scikit-learn.org/1.9/modules/generated/sklearn.feature_selection.SelectKBest.html), [GridSearchCV](https://scikit-learn.org/1.9/modules/generated/sklearn.model_selection.GridSearchCV.html), [RandomizedSearchCV](https://scikit-learn.org/1.9/modules/generated/sklearn.model_selection.RandomizedSearchCV.html), [MAE](https://scikit-learn.org/1.9/modules/generated/sklearn.metrics.mean_absolute_error.html), [RMSE](https://scikit-learn.org/1.9/modules/generated/sklearn.metrics.root_mean_squared_error.html) |
+| scikit-learn | 1.9.1 | [Pipelines](https://scikit-learn.org/1.9/modules/compose.html), [StratifiedKFold](https://scikit-learn.org/1.9/modules/generated/sklearn.model_selection.StratifiedKFold.html), [SelectKBest](https://scikit-learn.org/1.9/modules/generated/sklearn.feature_selection.SelectKBest.html), [GridSearchCV](https://scikit-learn.org/1.9/modules/generated/sklearn.model_selection.GridSearchCV.html), [MAE](https://scikit-learn.org/1.9/modules/generated/sklearn.metrics.mean_absolute_error.html), [RMSE](https://scikit-learn.org/1.9/modules/generated/sklearn.metrics.root_mean_squared_error.html) |
 | joblib | 1.6.0 | save and load the bundle |
 | streamlit | 1.67.0 | [AppTest](https://docs.streamlit.io/develop/api-reference/app-testing/st.testing.v1.apptest) |
 | jupyter | 1.1.1 | notebook server |
