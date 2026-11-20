@@ -2,13 +2,24 @@
 
 Day 1 of the Machine Learning Bootcamp. You build two local checks for Fresh and Good, a fictional Bangkok online grocery. Classification asks who places no paid order next month. Regression asks how many baht they spend in that same month.
 
+Shared setup:
+
 - 1.1 [Start and Python](00_start.ipynb)
 - 1.2 [Look at the customers](01_eda.ipynb)
 - 1.3 [Split the rows](02_split.ipynb)
+
+Classification (churn):
+
 - 1.4 [Train, cross-validate, engineer, and select features](03_train_cv.ipynb)
 - 1.5 [Search three classifiers, then choose one](04_tune.ipynb)
 - 1.6 [Choose a threshold and check the test rows once](05_evaluate.ipynb)
-- 1.7 [Estimate next-month spend](06_regression.ipynb)
+
+Regression (spend):
+
+- 1.7 [Estimate next-month spend](06_spend.ipynb)
+
+Form:
+
 - 1.8 [Score one customer](app.py)
 - [Column notes](data/DATA_DICTIONARY.md)
 
@@ -43,12 +54,12 @@ flowchart TD
     choose["Choose a model on validation AUC: 04_tune"]
     threshold["Choose a threshold on validation: 05_evaluate"]
     test["Score the churn test rows once: 05_evaluate"]
-    spendEng["Engineer features: 06_regression"]
-    spendSel["SelectKBest k=5: 06_regression"]
-    spendSearch["Search three regressors: 06_regression"]
-    spendChoose["Choose on validation MAE: 06_regression"]
-    spendTest["Score the spend test rows once: 06_regression"]
-    save["Save the bundles: 05_evaluate and 06_regression"]
+    spendEng["Engineer features: 06_spend"]
+    spendSel["SelectKBest k=5: 06_spend"]
+    spendSearch["Search three regressors: 06_spend"]
+    spendChoose["Choose on validation MAE: 06_spend"]
+    spendTest["Score the spend test rows once: 06_spend"]
+    save["Save the bundles: 05_evaluate and 06_spend"]
     form["Open the form: app.py"]
     frame --> look --> split --> baseline --> prep --> engineer --> select --> tune --> choose --> threshold --> test --> save
     split --> spendEng --> spendSel --> spendSearch --> spendChoose --> spendTest --> save
@@ -198,7 +209,7 @@ Run the notebooks in order.
 4. `03_train_cv.ipynb`
 5. `04_tune.ipynb`
 6. `05_evaluate.ipynb`
-7. `06_regression.ipynb`
+7. `06_spend.ipynb`
 
 Each notebook loads the CSV itself. You can restart the kernel between files.
 
@@ -225,7 +236,7 @@ Fill each exercise before running the notebook from top to bottom. `None` and `N
 | `03_train_cv.ipynb` | `add_features`, the `SelectKBest` count, `orders_kept`, and the plain forest cross-validation mean |
 | `04_tune.ipynb` | `svc_pipeline`, `svc_grid`, `chosen_model`, and one sentence |
 | `05_evaluate.ipynb` | test precision, test recall, and test ROC-AUC |
-| `06_regression.ipynb` | `hgb_pipeline`, `hgb_grid`, `chosen_spend`, test MAE, and test RMSE |
+| `06_spend.ipynb` | `hgb_pipeline`, `hgb_grid`, `chosen_spend`, test MAE, and test RMSE |
 | `app.py` | `churn_decision` |
 
 If you are still in an earlier notebook at 15:50, ask the instructor for both checkpoint bundles. Follow [Resume points](checkpoints/README.md) to use them.

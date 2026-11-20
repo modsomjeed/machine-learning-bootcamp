@@ -11,7 +11,7 @@ NOTEBOOKS = (
     "03_train_cv.ipynb",
     "04_tune.ipynb",
     "05_evaluate.ipynb",
-    "06_regression.ipynb",
+    "06_spend.ipynb",
 )
 
 
@@ -52,7 +52,7 @@ def test_public_notebooks_keep_placeholders():
     assert "CalibratedClassifierCV" in tune
     evaluate = (module_root() / "05_evaluate.ipynb").read_text()
     assert "CHURN_NAMES" in evaluate
-    spend = (module_root() / "06_regression.ipynb").read_text()
+    spend = (module_root() / "06_spend.ipynb").read_text()
     assert "hgb_pipeline = None" in spend
     assert "chosen_spend = None" in spend
 
