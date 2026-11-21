@@ -57,8 +57,8 @@ def test_public_notebooks_keep_placeholders():
     assert "chosen_spend = None" in spend
 
 
-def test_boot_cell_finds_the_module_from_supported_folders():
-    source = _code(_notebook("01_eda.ipynb"), 0)
+def test_first_code_cell_finds_the_module_from_supported_folders():
+    source = _code(_notebook("01_eda.ipynb"), 0) + "\nprint('module', ROOT)\n"
     folders = (module_root().parent, module_root())
     for folder in folders:
         completed = subprocess.run(

@@ -12,7 +12,7 @@ Classification (churn):
 
 - 1.4 [Train, cross-validate, engineer, and select features](03_train_cv.ipynb)
 - 1.5 [Search three classifiers, then choose one](04_tune.ipynb)
-- 1.6 [Choose a threshold and check the test rows once](05_evaluate.ipynb)
+- 1.6 [Choose a threshold and score the test rows once](05_evaluate.ipynb)
 
 Regression (spend):
 
@@ -199,7 +199,7 @@ uv run python -m jupyter notebook
 
 Open `00_start.ipynb`. If the kernel menu lists more than one Python, choose Python (fresh-and-good-day1).
 
-The first code cell prints `cwd` and `module`. Start Jupyter from the repo folder or from `01-supervised-learning`. Other folders fail that cell on purpose.
+Start Jupyter from the repo folder or from `01-supervised-learning`. Other folders fail the first code cell on purpose.
 
 Run the notebooks in order.
 
@@ -259,7 +259,7 @@ The optional expander under the form is an engineer stretch for one more input r
 
 ## Troubleshooting
 
-`ModuleNotFoundError` for `schema` or `pipelines`. Start Jupyter from the repo folder or from `01-supervised-learning`. The first cell prints `cwd` and `module` when it works. Run `uv` through mise so `PYTHONPATH` includes `lib`.
+`ModuleNotFoundError` for `schema` or `pipelines`. Start Jupyter from the repo folder or from `01-supervised-learning`. Run `uv` through mise so `PYTHONPATH` includes `lib`.
 
 `uv run python -m generate --check` prints `mismatch`. Leave the CSV alone. Run the command from this folder.
 
